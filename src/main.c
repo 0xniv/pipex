@@ -1,6 +1,7 @@
 #include <stdio.h>
+#include "../lib/ft_printf/includes/ft_printf.h"
 int	main(void)
 {
-	printf("%s\n", "hello");
+	ft_printf("%s\n", "hello");
 	return (0);
 }
