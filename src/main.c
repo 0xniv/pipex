@@ -1,5 +1,5 @@
-#include <stdio.h>
-#include "../lib/ft_printf/includes/ft_printf.h"
+#include "../includes/pipex.h"
+
 int	main(void)
 {
 	ft_printf("%s\n", "hello");

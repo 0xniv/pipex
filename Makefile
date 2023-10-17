@@ -6,7 +6,7 @@
 #    By: vde-frei <vde-frei@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/17 10:03:10 by vde-frei          #+#    #+#              #
-#    Updated: 2023/10/17 12:03:25 by vde-frei         ###   ########.fr        #
+#    Updated: 2023/10/17 13:34:16 by vde-frei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = pipex
 
 SHELL := /bin/bash
 COUNT := 0
-SLEEP := sleep 0.5
+SLEEP := sleep 0.2
 
 BLACK  		 = \033[0;30m
 RED    		 = \033[0;31m
@@ -106,4 +106,3 @@ debbug:
 	@make WITH_DEBBUG=TRUE --no-print-directory
 
 .PHONY: all bonus clean fclean re debbug
-
