@@ -1,7 +1,13 @@
 #include "../includes/pipex.h"
 
-int	main(void)
+int	main(int argc, char **argv)
 {
-	ft_printf("%s\n", "hello");
+	(void)argv;
+	if (5 == argc)
+	{
+		ft_printf("%s\n", "In");
+	}
+	else
+		ft_printf("%s\n", "Not In");
 	return (0);
 }
