@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nivi <nivi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 23:25:32 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/03 23:05:04 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/04 01:55:20 by nivi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,26 +53,28 @@ int	main(int argc, char **argv, char **envp)
 	// close(fd[0]);
 	// close(fd[1]);
 	char	**path;
-	char	teh[3][50] = { "oi", "test", "PATH=/nfs/s/a:/nfs/ab/cs:/nfs/a/as" };
 	int		words;
-	int		pos = 0;
+	int		i;
 
+	i = 0;
 	words = 0;
 	path = NULL;
-	while (pos <= 3) {
-		if (ft_strnstr(*teh, "PATH=", 5) != NULL) {
-			words = count_word(*teh, ':');
+	while (envp[i] != NULL) {
+		if (ft_strnstr(envp[i], "PATH=", 5) != NULL) {
+			words = count_word(envp[i], ':');
 			path = malloc(sizeof(char *) * words); 
-			path = ft_split(*teh + 5, ':');
+			path = ft_split(envp[i] + 5, ':');
 			break;
 		}
-		pos++;
+		i++;
 	}
-	while (*path) {
-		printf("%s\n", *path);
-		free(*path);
-		path++;
+	i = 0;
+	while (path[i]) {
+		printf("%s\n", path[i]);
+		free(path[i]);
+		i++;
 	}
 	free(path);
+	
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nivi <nivi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 19:44:39 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/03 22:38:57 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/04 01:38:03 by nivi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	alloc_mem(char **split_array, char const *s, char c)
 				letters++;
 				s++;
 			}
-			split_array[index] = (char *)malloc((letters + 1) * sizeof(char));
+			split_array[index] = ft_calloc((letters + 1), sizeof(char));
 			index++;
 			letters = 0;
 		}
