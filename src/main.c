@@ -6,7 +6,7 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 23:25:32 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/04 17:24:48 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/04 19:19:07 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,19 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	**path;
-	// int	fd[2];
-	// pid_t	pid1;
-	// pid_t	pid2;
+	t_pipe	pipe;
 	(void)argv;
-	(void)argc;
 	(void)envp;
-	// if (5 != argc)
-	// {
-	// 	ft_printf("%s\n", "Not In");
-	// 	return (0);
-	// }
+	pipe.path = NULL;
+	if (5 != argc)
+		invalid_args();
 	// if (pipe(fd) == -1)
 	// 	return (1);
 	// close(fd[0]);
 	// close(fd[1]);
 
-	path = NULL;
-	path = get_paths(path, envp);
-	ft_free_split(path);
+	pipe.path = get_paths(pipe.path, envp);
+	ft_free_split(pipe.path);
 	
 	return (0);
 }
