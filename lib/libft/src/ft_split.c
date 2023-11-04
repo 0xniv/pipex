@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nivi <nivi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 19:44:39 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/04 01:38:03 by nivi             ###   ########.fr       */
+/*   Updated: 2023/11/04 14:17:07 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char	**ft_split(char const *s, char c)
 	int		words;
 
 	words = count_word(s, c);
-	result = malloc((words + 1) * sizeof(char *));
+	result = ft_calloc((words + 1), sizeof(char *));
 	if (!s || !result)
 		return (NULL);
 	alloc_mem(result, s, c);

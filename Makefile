@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vde-frei <vde-frei@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/17 10:03:10 by vde-frei          #+#    #+#              #
-#    Updated: 2023/10/17 13:34:16 by vde-frei         ###   ########.fr        #
+#    Updated: 2023/11/04 14:57:15 by vde-frei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,7 @@ LIBFT_PATH = lib/libft
 FTPF = lib/ft_printf/libftprintf.a
 FTPF_PATH = lib/ft_printf
 
-CFILES = $(addprefix $(SRC)/, main.c)
+CFILES = $(addprefix $(SRC)/, main.c string.c)
 
 BFILES = $(addprefix $(BONUS)/, main_bonus.c)
 

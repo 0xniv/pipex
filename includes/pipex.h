@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vde-frei <vde-frei@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 12:31:42 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/10/17 13:29:13 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/04 17:35:05 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,24 @@
 # include <string.h>
 
 /* wait, waitpid */
-#include <sys/wait.h>
+# include <sys/wait.h>
+
+/* =========================================================== */
+
+/* structs */
+typedef struct s_pipe	t_pipe;
+struct s_pipe
+{
+	int		fd[2];
+	pid_t	pid1;
+	pid_t	pid2;
+	char	**path;
+};
+
+/* =========================================================== */
+
+/* functions */
+char	**get_paths(char	**path, char **envp);
+int		count_word(const char *s, char c);
 
 #endif
