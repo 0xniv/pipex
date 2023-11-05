@@ -6,13 +6,13 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 17:35:21 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/04 21:32:32 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/05 04:47:11 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	count_word(const char *s, char c)
+static int	count_word(const char *s, char c)
 {
 	int	index;
 	int	words;

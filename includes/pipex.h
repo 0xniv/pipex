@@ -6,7 +6,7 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 12:31:42 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/05 04:26:18 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/05 05:06:51 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,18 @@ struct s_pipe
 	char	**cmds;
 };
 
+typedef enum e_file_type
+{
+	INFILE,
+	OUTFILE,
+}			t_file_type;
+
 /* =========================================================== */
 
 /* functions */
 void	invalid_args();
 char	**get_paths(char **path, char **envp);
 int		check_access(t_pipe	**pipe, char *command);
-int		count_word(const char *s, char c);
+int		open_file(char *file, t_file_type in_out);
 
 #endif

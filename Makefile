@@ -6,7 +6,7 @@
 #    By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/17 10:03:10 by vde-frei          #+#    #+#              #
-#    Updated: 2023/11/04 23:10:43 by vde-frei         ###   ########.fr        #
+#    Updated: 2023/11/05 04:43:19 by vde-frei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,8 @@ LIBFT_PATH = lib/libft
 FTPF = lib/ft_printf/libftprintf.a
 FTPF_PATH = lib/ft_printf
 
-CFILES = $(addprefix $(SRC)/, main.c string.c errors.c check_access.c)
+CFILES = $(addprefix $(SRC)/, main.c string.c errors.c check_access.c \
+file_management.c)
 
 BFILES = $(addprefix $(BONUS)/, main_bonus.c)
 
