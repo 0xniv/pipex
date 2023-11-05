@@ -6,7 +6,7 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 12:31:42 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/04 20:26:15 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/04 23:52:36 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ struct s_pipe
 
 /* functions */
 void	invalid_args(void);
-char	**get_paths(char	**path, char **envp);
+char	**get_paths(char **path, char **envp);
+int		check_access(t_pipe	*pipe, char **command);
 int		count_word(const char *s, char c);
 
 #endif
