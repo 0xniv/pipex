@@ -6,7 +6,7 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 17:35:21 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/04 17:36:02 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/04 21:32:32 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,12 @@ char	**get_paths(char	**path, char **envp)
 			path = ft_split(envp[index] + 5, ':');
 			break ;
 		}
+		index++;
+	}
+	index = 0;
+	while (path[index] != NULL)
+	{
+		path[index] = ft_strjoin(path[index], "/");
 		index++;
 	}
 	return (path);

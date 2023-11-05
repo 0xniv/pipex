@@ -6,7 +6,7 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 12:31:42 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/04 18:38:07 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/04 20:26:15 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,10 @@ typedef struct s_pipe	t_pipe;
 struct s_pipe
 {
 	int		fd[2];
+	int		access;
 	pid_t	pid1;
 	pid_t	pid2;
+	size_t	pos;
 	char	**path;
 };
 
