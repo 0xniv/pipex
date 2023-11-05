@@ -6,7 +6,7 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 23:25:32 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/05 05:06:00 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/05 05:10:09 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,11 @@ int	main(int argc, char **argv, char **envp)
 	ft_free_split(pype.path);
 	return (0);
 }
+
 static void	child_process(char **argv, int *pipedes, char **envp)
 {
 	int	fd;
+
 	(void)envp;
 	fd = open_file(argv[1], INFILE);
 	dup2(fd, STDIN_FILENO);
@@ -53,6 +55,7 @@ static void	child_process(char **argv, int *pipedes, char **envp)
 	close(pipedes[0]);
 	//make execution function to use with argv[2]
 }
+
 static void	parent_process(char **argv, int *pipedes, char **envp)
 {
 	int	fd;
