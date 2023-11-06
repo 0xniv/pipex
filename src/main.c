@@ -6,7 +6,7 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 23:25:32 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/05 05:10:09 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/05 21:23:49 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,3 +67,5 @@ static void	parent_process(char **argv, int *pipedes, char **envp)
 	close(pipedes[1]);
 	//make execution function to use with argv[3]
 }
+
+// static void	exec(char **argv, char **envp)

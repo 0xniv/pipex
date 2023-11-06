@@ -6,7 +6,7 @@
 #    By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/17 10:03:10 by vde-frei          #+#    #+#              #
-#    Updated: 2023/11/05 04:43:19 by vde-frei         ###   ########.fr        #
+#    Updated: 2023/11/05 21:23:42 by vde-frei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,7 +73,7 @@ all: $(OBJ) $(NAME)
 
 $(NAME): $(OBJECT)
 	@$(MAKE) -sC $(LIBFT_PATH)
-	@$(MAKE) -sC $(FTPF_PATH)
+	@$(MAKE) bonus -sC $(FTPF_PATH)
 	@$(CC) $(CFLAGS) $(INCLUDES) $(LINCLUDES) $(OBJECT) $(LIBFT) $(FTPF) -o $(NAME)
 	@$(SLEEP)
 	@printf "\n$(MAGENTA)$(MANDATORY)\n$(RESET)"
