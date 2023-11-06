@@ -1,6 +1,0 @@
-???
-????
-bem
-com voce meu querido programador
-oi
-tudo

@@ -12,9 +12,10 @@ define openf
 end
 
 define exec
-	disp pype->path
-	disp pype
-	disp cmd_n_flags
+	disp *pype->path
+	disp *pype->path[pype.pos]
+	disp *cmd_n_flags@5
+	disp pype->access
 end
 
 define get_p
@@ -22,3 +23,8 @@ define get_p
 	disp words
 	disp envp[index]
 	disp path[index]
+end
+
+define	p_child
+	set follow-fork-mode child
+end

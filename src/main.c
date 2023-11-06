@@ -6,7 +6,7 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 23:25:32 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/06 14:25:35 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:06:57 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static void	execution(char *cmd_arg, char **env)
 		ft_free_split(cmd_n_flags);
 		exit(127);
 	}
-	pype->access = check_access(&pype, cmd_arg);
+	pype->access = check_access(&pype, cmd_n_flags[0]);
 	if (pype->access == 0)
 		execve(pype->path[pype->pos], cmd_n_flags, env);
 	free(*(pype)->path);
