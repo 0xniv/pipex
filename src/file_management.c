@@ -6,7 +6,7 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 04:42:34 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/05 05:08:54 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/06 09:58:04 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@ int	open_file(char *file, t_file_type in_out)
 	int		status;
 	char	*err_msg;
 
+	status = 0;
 	if (in_out == INFILE)
 		status = open(file, O_RDONLY);
-	else
+	else if (in_out == OUTFILE)
 		status = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (status == -1)
 	{

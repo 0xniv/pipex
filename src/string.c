@@ -6,7 +6,7 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 17:35:21 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/05 04:47:11 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/06 00:35:56 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	count_word(const char *s, char c)
 	return (words);
 }
 
-char	**get_paths(char	**path, char **envp)
+char	**get_paths(char **path, char **envp)
 {
 	int	index;
 	int	words;

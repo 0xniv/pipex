@@ -8,7 +8,7 @@
         "type": "cppdbg",
         "request": "launch",
         "program": "${workspaceFolder}/pipex",
-        "args": ["infile", "ls", "ls", "outfile"],
+        "args": ["a", "ls", "cat b", "b"],
         "stopAtEntry": true,
         "cwd": "${fileDirname}",
         "environment": [],

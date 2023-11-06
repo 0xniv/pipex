@@ -6,7 +6,7 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 12:31:42 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/05 21:24:33 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/06 00:55:19 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ struct s_pipe
 	pid_t	pid;
 	size_t	pos;
 	char	**path;
-	char	**cmds;
 };
 
 typedef enum e_file_type
