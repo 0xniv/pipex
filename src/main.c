@@ -6,7 +6,7 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 23:25:32 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/06 16:06:57 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:56:44 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	main(int argc, char **argv, char **envp)
 		child_process(argv, pype.fd, envp);
 	waitpid(pype.pid, NULL, WNOHANG);
 	parent_process(argv, pype.fd, envp);
-	return (0);
 }
 
 static void	child_process(char **argv, int *pipedes, char **envp)
@@ -69,7 +68,7 @@ static void	execution(char *cmd_arg, char **env)
 	t_pipe	*pype;
 	char	**cmd_n_flags;
 
-	pype = ft_calloc(1, sizeof(t_pipe *));
+	pype = ft_calloc(1, sizeof(t_pipe));
 	pype->path = get_paths(pype->path, env);
 	cmd_n_flags = ft_split(cmd_arg, ' ');
 	if (pype->path == NULL)

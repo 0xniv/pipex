@@ -6,7 +6,7 @@
 #    By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/17 10:03:10 by vde-frei          #+#    #+#              #
-#    Updated: 2023/11/05 21:23:42 by vde-frei         ###   ########.fr        #
+#    Updated: 2023/11/06 16:51:58 by vde-frei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ BLIBNAME = pipex_bonus
 COMP = Compiling
 
 DFLAGS = -Wall -Wextra -Werror -g3 # TO DEBBUG
-CFLAGS = -Wall -Werror -Wextra -O3 -fomit-frame-pointer -finline-functions # TO IMPROVE PERFORMANCE
+CFLAGS = -Wall -Werror -Wextra -O3 -g3 -fomit-frame-pointer -finline-functions # TO IMPROVE PERFORMANCE
 
 SRC = src
 BONUS = src/bonus
