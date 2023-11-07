@@ -2,5 +2,5 @@
 	path = lib/ft_printf
 	url = https://github.com/vinicius-f-pereira/ft_printf
 [submodule "libft"]
-	path = libft
+	path = lib/libft
 	url = git@github.com:vinicius-f-pereira/libft.git
