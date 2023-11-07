@@ -6,7 +6,7 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 23:25:32 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/06 16:56:44 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/06 21:10:59 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,10 @@ int	main(int argc, char **argv, char **envp)
 		exit(errno);
 	}
 	if (!pype.pid)
-		child_process(argv, pype.fd, envp);
+		child_process(argv, pype.fd, envp); // make a fork for it
 	waitpid(pype.pid, NULL, WNOHANG);
-	parent_process(argv, pype.fd, envp);
+	parent_process(argv, pype.fd, envp); // and make a fork to it too
+	return (0);
 }
 
 static void	child_process(char **argv, int *pipedes, char **envp)
