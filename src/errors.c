@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nivi <nivi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 18:39:06 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/05 04:41:06 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/07 15:08:47 by nivi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,10 @@ void	invalid_args(void)
 	while (err[index])
 		ft_putendl_fd(err[index++], STDERR_FILENO);
 	exit(EXIT_FAILURE);
+}
+
+void	end(void)
+{
+	perror(NULL);
+	exit(errno);
 }

@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nivi <nivi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 23:25:32 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/06 21:10:59 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/07 15:42:06 by nivi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static void	child_process(char **argv, int *pipedes, char **envp);
-static void	parent_process(char **argv, int *pipedes, char **envp);
+static void	first_process(char **argv, int *pipedes, char **envp);
+static void	second_process(char **argv, int *pipedes, char **envp);
 static void	execution(char *cmd_arg, char **env);
 
 int	main(int argc, char **argv, char **envp)
@@ -23,24 +23,25 @@ int	main(int argc, char **argv, char **envp)
 	if (5 != argc)
 		invalid_args();
 	if (pipe(pype.fd) == -1)
-	{
-		perror(NULL);
-		exit(errno);
-	}
-	pype.pid = fork();
-	if (pype.pid == -1)
-	{
-		perror(NULL);
-		exit(errno);
-	}
-	if (!pype.pid)
-		child_process(argv, pype.fd, envp); // make a fork for it
-	waitpid(pype.pid, NULL, WNOHANG);
-	parent_process(argv, pype.fd, envp); // and make a fork to it too
+		end();
+	pype.pid_0 = fork();
+	if (pype.pid_0 == -1)
+		end();
+	if (!pype.pid_0)
+		first_process(argv, pype.fd, envp);
+	pype.pid_1 = fork();
+	if (pype.pid_1 == -1)
+		end();
+	if (!pype.pid_1)
+		second_process(argv, pype.fd, envp);
+	waitpid(pype.pid_0, NULL, WNOHANG);
+	waitpid(pype.pid_1, NULL, WNOHANG);
+	close(pype.fd[0]);
+	close(pype.fd[1]);
 	return (0);
 }
 
-static void	child_process(char **argv, int *pipedes, char **envp)
+static void	first_process(char **argv, int *pipedes, char **envp)
 {
 	int	fd;
 
@@ -48,11 +49,12 @@ static void	child_process(char **argv, int *pipedes, char **envp)
 	dup2(fd, STDIN_FILENO);
 	dup2(pipedes[1], STDOUT_FILENO);
 	close(pipedes[0]);
+	close(pipedes[1]);
 	close(fd);
 	execution(argv[2], envp);
 }
 
-static void	parent_process(char **argv, int *pipedes, char **envp)
+static void	second_process(char **argv, int *pipedes, char **envp)
 {
 	int	fd;
 
@@ -60,6 +62,7 @@ static void	parent_process(char **argv, int *pipedes, char **envp)
 	dup2(fd, STDOUT_FILENO);
 	dup2(pipedes[0], STDIN_FILENO);
 	close(pipedes[1]);
+	close(pipedes[0]);
 	close(fd);
 	execution(argv[3], envp);
 }
