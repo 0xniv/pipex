@@ -3,19 +3,24 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+         #
+#    By: nivi <nivi@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/17 10:03:10 by vde-frei          #+#    #+#              #
-#    Updated: 2023/11/06 16:51:58 by vde-frei         ###   ########.fr        #
+#    Updated: 2023/11/07 20:12:34 by nivi             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+# program name #
 NAME = pipex
 
+# shell #
 SHELL := /bin/bash
+
+# misc #
 COUNT := 0
 SLEEP := sleep 0.2
 
+# colors #
 BLACK  		 = \033[0;30m
 RED    		 = \033[0;31m
 GREEN  		 = \033[0;32m
@@ -26,6 +31,13 @@ CYAN   		 = \033[0;36m
 WHITE  		 = \033[0;37m
 RESET  		 = \033[0m
 
+# functions #
+define eraseBins
+	$(if $(NAME),@$(RM) $(NAME))
+	$(if $(BLIBNAME),@$(RM) $(BLIBNAME))
+endef
+
+# messages #
 MANDATORY = Program compiled
 LBONUS = Bonus Program compiled
 CLEAN = Objects delete
@@ -34,14 +46,17 @@ LIBNAME = pipex
 BLIBNAME = pipex_bonus
 COMP = Compiling
 
+# debbug and normal flags #
 DFLAGS = -Wall -Wextra -Werror -g3 # TO DEBBUG
 CFLAGS = -Wall -Werror -Wextra -O3 -g3 -fomit-frame-pointer -finline-functions # TO IMPROVE PERFORMANCE
 
+# paths #
 SRC = src
 BONUS = src/bonus
 INC = includes
 OBJ = obj
 
+# libs #
 INCLUDES = -I$(INC)/ -Ilib/libft/includes/ -Ilib/ft_printf/includes/
 LINCLUDES = -L$(LIBFT_PATH) -lft -L$(FTPF_PATH) -lft
 
@@ -51,24 +66,32 @@ LIBFT_PATH = lib/libft
 FTPF = lib/ft_printf/libftprintf.a
 FTPF_PATH = lib/ft_printf
 
+# files #
 CFILES = $(addprefix $(SRC)/, main.c string.c errors.c check_access.c \
 file_management.c)
 
-BFILES = $(addprefix $(BONUS)/, main_bonus.c)
+BFILES = $(addprefix $(BONUS)/, main_bonus.c string_bonus.c errors_bonus.c \
+check_access_bonus.c file_management_bonus.c)
 
+# obj dir #
 OBJECT =  $(patsubst %, $(OBJ)/%, $(notdir $(CFILES:.c=.o)))
 
+# define bonus #
 ifdef WITH_BONUS
+	NAME = $(BLIBNAME)
 	CFILES = $(BFILES)
+	SRC = $(BONUS)
 	MANDATORY = $(LBONUS)
 	MAGENTA = $(YELLOW)
 	LIBNAME = $(BLIBNAME)
 endif
 
+# define debbug #
 ifdef WITH_DEBBUG
 	CFLAGS = $(DFLAGS)
 endif
 
+# rules #
 all: $(OBJ) $(NAME)
 
 $(NAME): $(OBJECT)
@@ -94,7 +117,7 @@ clean:
 	@printf "$(RED)$(CLEAN)$(RESET)\n"
 
 fclean: clean
-	@$(RM) $(NAME)
+	$(call eraseBins)
 	@$(SLEEP)
 	@printf "$(RED)$(FCLEAN)$(RESET)\n"
 
