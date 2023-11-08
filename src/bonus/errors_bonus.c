@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nivi <nivi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 18:39:06 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/07 19:46:19 by nivi             ###   ########.fr       */
+/*   Updated: 2023/11/08 10:27:48 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	invalid_args(void)
 {
-	char	*err[9];
+	char	*err[14];
 	size_t	index;
 
 	index = 0;
@@ -26,7 +26,12 @@ void	invalid_args(void)
 	err[5] = "<cmd2>:  Second command to be executed.\n";
 	err[6] = "<outfile_path>: Path to the output file.\n";
 	err[7] = "E.g., ./pipex infile \"ls -l\" \"wc -l\" outfile\n";
-	err[8] = NULL;
+	err[8] = "\nIf you're trying <here_doc>: \n";
+	err[9] = "LIMITER: The path to the input file.";
+	err[10] = "<cmd[1, 2, ..., N]>: The commands to be executed.";
+	err[11] = "<path_to_outfile>: The path to the output file.\n";
+	err[12] = "Ex: ./pipex here_doc LIMITER \"grep hello\" sort output.txt";
+	err[13] = NULL;
 	while (err[index])
 		ft_putendl_fd(err[index++], STDERR_FILENO);
 	exit(EXIT_FAILURE);

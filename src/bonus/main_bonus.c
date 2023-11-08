@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nivi <nivi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 23:25:32 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/07 19:46:19 by nivi             ###   ########.fr       */
+/*   Updated: 2023/11/08 13:28:34 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,24 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_pipe	pype;
 
-	if (5 != argc)
+	if (5 < argc)
 		invalid_args();
+	if (ft_strncmp(argv[1], HERE_STR, ft_strlen(HERE_STR)) == 0)
+	{
+		if (argc < 6)
+			invalid_args();
+		pype.current_cmd = HERE_CMD;
+		pype.fd_out = open_file(argv[argc - 1], F_APPEND);
+		here_doc(argv);
+	}
+	else
+	{
+		pype.current_cmd = INIT_CMD;
+		pype.fd_in = open_file(argv[1], INFILE);
+		pype.fd_out = open_file(argv[1], OUTFILE);
+		//detach function from main
+
+	}
 	if (pipe(pype.fd) == -1)
 		end();
 	pype.pid_0 = fork();
@@ -75,13 +91,6 @@ static void	execution(char *cmd_arg, char **env)
 	pype = ft_calloc(1, sizeof(t_pipe));
 	pype->path = get_paths(pype->path, env);
 	cmd_n_flags = ft_split(cmd_arg, ' ');
-	if (pype->path == NULL)
-	{
-		ft_putstr_fd("pipex: command not found: ", STDERR_FILENO);
-		ft_putendl_fd(cmd_n_flags[0], STDERR_FILENO);
-		ft_free_split(cmd_n_flags);
-		exit(127);
-	}
 	pype->access = check_access(&pype, cmd_n_flags[0]);
 	if (pype->access == 0)
 		execve(pype->path[pype->pos], cmd_n_flags, env);

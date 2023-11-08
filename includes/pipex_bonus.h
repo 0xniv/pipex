@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nivi <nivi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 12:31:42 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/07 19:40:48 by nivi             ###   ########.fr       */
+/*   Updated: 2023/11/08 13:24:41 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@
 /* defines */
 
 # define ERRFD "Error in fd creation"
+# define HERE_STR "here_doc"
 
 /* =========================================================== */
 
@@ -51,24 +52,32 @@
 typedef struct s_pipe	t_pipe;
 struct s_pipe
 {
-	int		fd[2];
+	int		fd_in;
+	int		fd_out;
 	int		access;
 	pid_t	pid_0;
 	pid_t	pid_1;
 	size_t	pos;
 	char	**path;
+	char	**cmd;
+	char	*current_cmd;
 };
 
 typedef enum e_file_type
 {
 	INFILE,
 	OUTFILE,
+	F_APPEND,
+	INIT_CMD = 2,
+	HERE_CMD,
+	STD_INPUT = 0,
 }			t_file_type;
 
 /* =========================================================== */
 
 /* functions */
 void	invalid_args(void);
+void	here_doc(char **argv);
 void	end(void);
 char	**get_paths(char **path, char **envp);
 int		check_access(t_pipe	**pipe, char *command);
