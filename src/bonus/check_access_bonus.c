@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check_access_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nivi <nivi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 04:40:28 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/07 19:46:19 by nivi             ###   ########.fr       */
+/*   Updated: 2023/11/08 20:23:41 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "../../includes/pipex_bonus.h"
 
 int	check_access(t_pipe **pipe, char *command)
 {

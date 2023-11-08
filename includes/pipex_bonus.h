@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_bonus.h                                      :+:      :+:    :+:   */
+/*   ../../includes/pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -52,6 +52,7 @@
 typedef struct s_pipe	t_pipe;
 struct s_pipe
 {
+	int		current_cmd;
 	int		fd_in;
 	int		fd_out;
 	int		access;
@@ -60,7 +61,6 @@ struct s_pipe
 	size_t	pos;
 	char	**path;
 	char	**cmd;
-	char	*current_cmd;
 };
 
 typedef enum e_file_type

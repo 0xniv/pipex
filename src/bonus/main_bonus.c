@@ -6,15 +6,16 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 23:25:32 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/08 18:55:04 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/08 20:42:52 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "../../includes/pipex_bonus.h"
 
 static void	first_process(char **argv, int *pipedes, char **envp);
 static void	second_process(char **argv, int *pipedes, char **envp);
 static void	execution(char *cmd_arg, char **env);
+void		make_pipe(char **argv, char **env);
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -35,31 +36,14 @@ int	main(int argc, char **argv, char **envp)
 		pype.current_cmd = INIT_CMD;
 		pype.fd_in = open_file(argv[1], INFILE);
 		pype.fd_out = open_file(argv[1], OUTFILE);
-		dup2(fd_in, STD_INPUT);
+		dup2(pype.fd_in, STD_INPUT);
 	}
-	while (current_cmd < argc -2)
-	{
-		/*function to manage pipedes */
-		dup2(fd_out, STD_OUT);
-		execution(argv[pype.current_cmd]);
-	}
-		
-	if (pipe(pype.fd) == -1)
-		end();
-	pype.pid_0 = fork();
-	if (pype.pid_0 == -1)
-		end();
-	if (!pype.pid_0)
-		first_process(argv, pype.fd, envp);
-	pype.pid_1 = fork();
-	if (pype.pid_1 == -1)
-		end();
-	if (!pype.pid_1)
-		second_process(argv, pype.fd, envp);
+	while (pype.current_cmd < argc -2)
+		make_pipe(argv, envp);
 	waitpid(pype.pid_0, NULL, WNOHANG);
 	waitpid(pype.pid_1, NULL, WNOHANG);
-	close(pype.fd[0]);
-	close(pype.fd[1]);
+	close(pype.fd_in);
+	close(pype.fd_out);
 	return (0);
 }
 
@@ -104,4 +88,23 @@ static void	execution(char *cmd_arg, char **env)
 	ft_free_split(cmd_n_flags);
 	perror(NULL);
 	exit(errno);
+}
+
+void	make_pipe(char **cmd, char **env)
+{
+	pid_t	pid;
+	int		pipedes[2];
+
+	if (pipe(pipedes) == -1)
+		end();
+	pid = fork();
+	if (pid == -1)
+		end();
+	if (!pid)
+		first_process(cmd, pipedes, env);
+	pid = fork();
+	if (pipedes[2])
+		end();
+	second_process(cmd, pipedes, env);
+
 }

@@ -6,11 +6,11 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 17:35:21 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/08 13:29:47 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/08 20:23:41 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "../../includes/pipex_bonus.h"
 
 static void	manage_here_doc(char **argv, int *pipedes)
 
