@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nivi <nivi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 18:39:06 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/07 15:08:47 by nivi             ###   ########.fr       */
+/*   Updated: 2023/11/08 15:42:23 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,14 @@ void	invalid_args(void)
 
 void	end(void)
 {
+	perror(NULL);
+	exit(errno);
+}
+
+void	end_pipe(char *file)
+{
+	ft_putstr_fd("pipex: ", STDERR_FILENO);
+	ft_putendl_fd(file, STDERR_FILENO);
 	perror(NULL);
 	exit(errno);
 }

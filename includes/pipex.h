@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nivi <nivi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 12:31:42 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/07 15:09:05 by nivi             ###   ########.fr       */
+/*   Updated: 2023/11/08 15:52:09 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef enum e_file_type
 /* functions */
 void	invalid_args(void);
 void	end(void);
+void	end_pipe(char *file);
 char	**get_paths(char **path, char **envp);
 int		check_access(t_pipe	**pipe, char *command);
 int		open_file(char *file, t_file_type in_out);

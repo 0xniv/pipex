@@ -6,7 +6,7 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 23:25:32 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/08 14:36:06 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/08 15:53:25 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,12 @@ static void	first_process(char **argv, int *pipedes, char **envp)
 	int	fd;
 
 	fd = open_file(argv[1], INFILE);
+	if (fd == -1)
+	{
+		close(pipedes[0]);
+		close(pipedes[1]);
+		end_pipe(argv[1]);
+	}
 	dup2(fd, STDIN_FILENO);
 	dup2(pipedes[1], STDOUT_FILENO);
 	close(pipedes[0]);
@@ -59,6 +65,12 @@ static void	second_process(char **argv, int *pipedes, char **envp)
 	int	fd;
 
 	fd = open_file(argv[4], OUTFILE);
+	if (fd == -1)
+	{
+		close(pipedes[0]);
+		close(pipedes[1]);
+		end_pipe(argv[4]);
+	}
 	dup2(fd, STDOUT_FILENO);
 	dup2(pipedes[0], STDIN_FILENO);
 	close(pipedes[1]);
