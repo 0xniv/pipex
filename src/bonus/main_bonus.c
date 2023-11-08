@@ -6,7 +6,7 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 23:25:32 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/08 13:28:34 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/08 18:55:04 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,15 @@ int	main(int argc, char **argv, char **envp)
 		pype.current_cmd = INIT_CMD;
 		pype.fd_in = open_file(argv[1], INFILE);
 		pype.fd_out = open_file(argv[1], OUTFILE);
-		//detach function from main
-
+		dup2(fd_in, STD_INPUT);
 	}
+	while (current_cmd < argc -2)
+	{
+		/*function to manage pipedes */
+		dup2(fd_out, STD_OUT);
+		execution(argv[pype.current_cmd]);
+	}
+		
 	if (pipe(pype.fd) == -1)
 		end();
 	pype.pid_0 = fork();
