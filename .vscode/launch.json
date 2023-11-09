@@ -8,9 +8,9 @@
 			"name": "(gdb) Launch",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/pipex",
+			"program": "${workspaceFolder}/pipex_bonus",
 			"args": [
-				"a",
+				"/nfs/homes/vde-frei/common_core/pipex/README.md",
 				"sort",
 				"cat",
 				"b"

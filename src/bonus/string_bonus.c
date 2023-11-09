@@ -6,7 +6,7 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 17:35:21 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/09 11:46:44 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/09 12:32:45 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,14 @@ char	**get_paths(char **path, char **envp)
 {
 	int	index;
 
-	index = 0;
-	while (envp[index] != NULL)
-	{
+	index = -1;
+	while (envp[++index] != NULL)
 		if (ft_strnstr(envp[index], "PATH=", 5) != NULL)
 			path = ft_split(envp[index] + 5, ':');
-		index++;
-	}
-	index = 0;
-	while (path[index] != NULL)
-	{
+	index = -1;
+	while (path[++index] != NULL)
 		path[index] = ft_strjoin(path[index], "/");
-		index++;
-	}
-	if (path[index] == NULL)
+	if (path == NULL)
 	{
 		ft_putstr_fd("pipex: command not found: ", STDERR_FILENO);
 		ft_free_split(path);
