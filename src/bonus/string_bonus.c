@@ -6,13 +6,13 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 17:35:21 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/08 20:23:41 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/09 11:46:44 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/pipex_bonus.h"
 
-static void	manage_here_doc(char **argv, int *pipedes)
+static void	manage_here_doc(char **argv, int *pipedes);
 
 char	**get_paths(char **path, char **envp)
 {
@@ -31,7 +31,7 @@ char	**get_paths(char **path, char **envp)
 		path[index] = ft_strjoin(path[index], "/");
 		index++;
 	}
-	if (pype->path == NULL)
+	if (path[index] == NULL)
 	{
 		ft_putstr_fd("pipex: command not found: ", STDERR_FILENO);
 		ft_free_split(path);

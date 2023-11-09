@@ -6,7 +6,7 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 04:40:28 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/05 04:40:34 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/09 10:05:01 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,13 @@ int	check_access(t_pipe **pipe, char *command)
 		ft_free_split((*pipe)->path);
 		free((*pipe));
 		invalid_args();
+	}
+	if ((*pipe)->path == NULL)
+	{
+		ft_putstr_fd("pipex: command not found: ", STDERR_FILENO);
+		ft_putendl_fd(command, STDERR_FILENO);
+		ft_free_split((*pipe)->path);
+		exit(127);
 	}
 	return ((*pipe)->access);
 }

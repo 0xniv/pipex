@@ -6,7 +6,7 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 16:27:56 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/08 14:35:24 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/09 10:40:06 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 /* Std Libs Headers */
 # include <stdlib.h>
 # include <unistd.h>
-
+# include "get_next_line_bonus.h"
 /* Bonus TypeStruct */
 
 typedef struct s_list	t_list;

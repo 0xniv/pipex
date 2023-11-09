@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nivi <nivi@student.42.fr>                  +#+  +:+       +#+         #
+#    By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/17 10:03:10 by vde-frei          #+#    #+#              #
-#    Updated: 2023/11/07 20:12:34 by nivi             ###   ########.fr        #
+#    Updated: 2023/11/09 10:44:20 by vde-frei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ COMP = Compiling
 
 # debbug and normal flags #
 DFLAGS = -Wall -Wextra -Werror -g3 # TO DEBBUG
-CFLAGS = -Wall -Werror -Wextra -O3 -g3 -fomit-frame-pointer -finline-functions # TO IMPROVE PERFORMANCE
+CFLAGS = -Wall -Werror -Wextra -g3 # -O3 -fomit-frame-pointer -finline-functions # TO IMPROVE PERFORMANCE
 
 # paths #
 SRC = src

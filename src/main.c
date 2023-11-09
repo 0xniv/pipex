@@ -6,7 +6,7 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 23:25:32 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/08 15:53:25 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/09 10:04:18 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,6 @@ static void	execution(char *cmd_arg, char **env)
 	pype = ft_calloc(1, sizeof(t_pipe));
 	pype->path = get_paths(pype->path, env);
 	cmd_n_flags = ft_split(cmd_arg, ' ');
-	if (pype->path == NULL)
-	{
-		ft_putstr_fd("pipex: command not found: ", STDERR_FILENO);
-		ft_putendl_fd(cmd_n_flags[0], STDERR_FILENO);
-		ft_free_split(cmd_n_flags);
-		exit(127);
-	}
 	pype->access = check_access(&pype, cmd_n_flags[0]);
 	if (pype->access == 0)
 		execve(pype->path[pype->pos], cmd_n_flags, env);
