@@ -6,18 +6,19 @@
 /*   By: nivi <nivi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 17:35:21 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/10 16:10:02 by nivi             ###   ########.fr       */
+/*   Updated: 2023/11/10 16:32:58 by nivi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	**get_command(char *argv)
+char	**get_command(char *argv);
+char	*check_commands(char *cmd);
 
-int		build_cmd(char *argv, char **envp, char *path)
+int	build_cmd(char *argv, char **envp, char *path)
 {
 	t_pipex	pipex;
-	
+
 	if (!argv)
 		return (full_error("Parsing command fails:", strerror(errno), "", OUT));
 	pipex.paths = ft_split(path, ':');
@@ -43,7 +44,7 @@ int		build_cmd(char *argv, char **envp, char *path)
 char	**get_command(char *argv)
 {
 	int			i;
-	char	**cmds;
+	char		**cmds;
 
 	i = ft_strlen(argv);
 	while (argv[i] != 0x27 && argv[i] != 0x22 && i != 0)
@@ -58,4 +59,28 @@ char	**get_command(char *argv)
 			cmds = ft_split(argv, 0x22);
 	}
 	return (cmds);
+}
+
+char	*check_commands(char *cmd)
+{
+	char	*temp;
+	char	*aux;
+	char	**final;
+	size_t	i;
+
+	i = 0;
+	temp = ft_strdup(cmd);
+	while (temp[i] != '\0')
+	{
+		if (temp[i] == ' ')
+		{
+			final = ft_split(temp, ' ');
+			free(temp);
+			aux = ft_strdup(final[0]);
+			ft_free_split(final);
+			return (aux);
+		}
+		++i;
+	}
+	return (temp);
 }
