@@ -6,7 +6,7 @@
 /*   By: nivi <nivi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 17:35:21 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/10 18:15:14 by nivi             ###   ########.fr       */
+/*   Updated: 2023/11/10 19:34:28 by nivi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,5 +109,5 @@ char	*search_path(char *final, char **paths)
 		ft_free_str(cmd);
 		i++;
 	}
-	return(NULL);
+	return (NULL);
 }
