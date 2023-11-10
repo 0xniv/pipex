@@ -6,7 +6,7 @@
 /*   By: nivi <nivi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 12:31:42 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/10 16:32:22 by nivi             ###   ########.fr       */
+/*   Updated: 2023/11/10 16:41:09 by nivi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int		check_brother(char *file, char *cmd, char **envp, int *fildes);
 int		build_cmd(char *argv, char **envp, char *path);
 char	*get_env(char **envp);
 char	*check_commands(char *cmd);
+char	*search_path(char *final, char **paths);
 char	**get_command(char *argv);
 
 #endif

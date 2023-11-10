@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nivi <nivi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 17:06:02 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/08 14:35:12 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/10 16:39:00 by nivi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ char	*ft_strjoin(char *s1, char const *s2)
 	{
 		new_str[mark++] = s2[count++];
 	}
-	free(s1);
+	if (s1)
+		free(s1);
 	return (new_str);
 }

@@ -6,7 +6,7 @@
 /*   By: nivi <nivi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 17:35:21 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/10 16:32:58 by nivi             ###   ########.fr       */
+/*   Updated: 2023/11/10 16:40:59 by nivi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 char	**get_command(char *argv);
 char	*check_commands(char *cmd);
+char	*search_path(char *final, char **paths);
 
 int	build_cmd(char *argv, char **envp, char *path)
 {
@@ -83,4 +84,29 @@ char	*check_commands(char *cmd)
 		++i;
 	}
 	return (temp);
+}
+
+char	*search_path(char *final, char **paths)
+{
+	char	*temp;
+	char	*cmd;
+	int		i;
+
+	if (access(final, F_OK | X_OK) == 0)
+	{
+		cmd = ft_strdup(final);
+		return (cmd);
+	}
+	i = 0;
+	while (paths[i])
+	{
+		temp = ft_strjoin(paths[i], '/');
+		cmd = ft_strjoin(temp, final);
+		free(temp);
+		if (access(cmd, F_OK | X_OK) == 0)
+			return (cmd);
+		free(cmd);
+		i++;
+	}
+	return(NULL);
 }
