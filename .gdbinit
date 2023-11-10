@@ -25,6 +25,6 @@ define get_p
 	disp path[index]
 end
 
-define	p_child
-	set follow-fork-mode child
-end
+# define	p_child
+# 	set follow-fork-mode child
+# end
