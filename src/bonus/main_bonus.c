@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nivi <nivi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 23:25:32 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/09 21:52:30 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/10 09:29:28 by nivi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_pipe	pype;
 
-	if (5 < argc)
+	if (argc < 5)
 		invalid_args();
 	if (ft_strncmp(argv[1], HERE_STR, ft_strlen(HERE_STR)) == 0)
 	{
@@ -42,8 +42,8 @@ int	main(int argc, char **argv, char **envp)
 		make_pipe(argv[pype.current_cmd++], envp);
 	dup2(pype.fd_out, STDOUT_FILENO);
 	execution(argv[pype.current_cmd], envp);
-	printf("\n aqui eu cheguei? main\n");
 	close_fd(&pype.fd_in, &pype.fd_out);
+	wait(NULL);
 	return (0);
 }
 
@@ -73,19 +73,22 @@ void	make_pipe(char *cmd, char **env)
 	if (pipe(pipedes) == -1)
 		end();
 	pid = fork();
-	printf("\ncheguei aqui ??\n");
-	verify_fork(&pid, pipedes, cmd, env);
+	if (pid == 0)
+	{
+		verify_fork(&pid, pipedes, cmd, env);
+	}
 	pid_2 = fork();
-	verify_fork(&pid_2, pipedes, cmd, env);
-	printf("\ncheguei aqui??2");
-	waitpid(pid, NULL, 0);
-	waitpid(pid_2, NULL, 0);
+	if (pid_2 == 0)
+	{
+		verify_fork(&pid_2, pipedes, cmd, env);
+	}
 }
 
 static void	verify_fork(pid_t *pid, int *pipedes, char *cmd, char **env)
 {
 	if (*pid == -1)
 		end();
+	printf("\ncheguei aqui?? %d\n", getpid());
 	if (*pid == 0)
 	{
 		close(pipedes[0]);
