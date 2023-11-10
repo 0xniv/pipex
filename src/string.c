@@ -3,25 +3,59 @@
 /*                                                        :::      ::::::::   */
 /*   string.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nivi <nivi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 17:35:21 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/09 15:51:08 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/10 16:10:02 by nivi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	**get_paths(char **path, char **envp)
-{
-	int	index;
+char	**get_command(char *argv)
 
-	index = -1;
-	while (envp[++index] != NULL)
-		if (ft_strnstr(envp[index], "PATH=", 5) != NULL)
-			path = ft_split(envp[index] + 5, ':');
-	index = -1;
-	while (path[++index] != NULL)
-		path[index] = ft_strjoin(path[index], "/");
-	return (path);
+int		build_cmd(char *argv, char **envp, char *path)
+{
+	t_pipex	pipex;
+	
+	if (!argv)
+		return (full_error("Parsing command fails:", strerror(errno), "", OUT));
+	pipex.paths = ft_split(path, ':');
+	pipex.cmds = get_command(argv);
+	pipex.final = check_command(pipex.cmds[0]);
+	pipex.cmd = search_path(pipex.final, pipex.paths);
+	ft_free_split(pipex.paths);
+	free(pipex.final);
+	if (!pipex.cmd)
+	{
+		ft_free_split(pipex.cmds);
+		return (full_error("command not found ", argv, "", 127));
+	}
+	if (execve(pipex.cmd, pipex.paths, envp) < 0)
+	{
+		free(pipex.cmd);
+		ft_free_split(pipex.cmds);
+		return (full_error("execve failed", "", "", 127));
+	}
+	return (IN);
+}
+
+char	**get_command(char *argv)
+{
+	int			i;
+	char	**cmds;
+
+	i = ft_strlen(argv);
+	while (argv[i] != 0x27 && argv[i] != 0x22 && i != 0)
+		--i;
+	if (i == 0)
+		cmds = ft_split(argv, ' ');
+	else
+	{
+		if (argv[i] == 39)
+			cmds = ft_split(argv, 0x27);
+		else
+			cmds = ft_split(argv, 0x22);
+	}
+	return (cmds);
 }

@@ -6,7 +6,7 @@
 /*   By: nivi <nivi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 12:31:42 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/10 12:45:14 by nivi             ###   ########.fr       */
+/*   Updated: 2023/11/10 16:12:44 by nivi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,33 +48,32 @@
 /* =========================================================== */
 
 /* structs */
-typedef struct s_pipe	t_pipe;
-struct s_pipe
+typedef struct s_pipex	t_pipex;
+struct s_pipex
 {
-	int		retrn;
-	int		fd[2];
-	int		status;
-	int		file;
-	pid_t	pid_p;
-	pid_t	pid_c;
-	size_t	pos;
-	char	*path;
+	char	**paths;
+	char	**cmds;
+	char	*cmd;
+	char	*final;
 };
 
 typedef enum e_file_type
 {
 	INFILE,
 	OUTFILE,
+	IN = 0,
+	OUT,
+	ERR,
 }			t_file_type;
 
 /* =========================================================== */
 
 /* functions */
-void	invalid_args(void);
-void	end(void);
-void	end_pipe(char *file);
-char	**get_paths(char **path, char **envp);
-int		check_access(t_pipe	**pipe, char *command);
-int		open_file(char *file, t_file_type in_out);
+int		full_error(char *str1, char *str2, char *str3, unsigned int retrn);
+int		fork_time(char **argv, char **envp, int *fildes);
+int		check_child(char *file, char *cmd, char **envp, int *fildes);
+int		check_brother(char *file, char *cmd, char **envp, int *fildes);
+int		build_cmd(char *argv, char **envp, char *path);
+char	*get_env(char **envp);
 
 #endif
