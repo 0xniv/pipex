@@ -6,16 +6,16 @@
 /*   By: nivi <nivi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 23:25:32 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/10 13:24:17 by nivi             ###   ########.fr       */
+/*   Updated: 2023/11/10 13:33:21 by nivi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static int	fork_time(char **argv, char **envp, int *fildes);
-static int	check_child(char *file, char *cmd, char **envp, int *fildes);
-static int	check_brother(char *file, char *cmd, char **envp, int *fildes);
-static char	*get_path(char **envp);
+int	fork_time(char **argv, char **envp, int *fildes);
+int	check_child(char *file, char *cmd, char **envp, int *fildes);
+int	check_brother(char *file, char *cmd, char **envp, int *fildes);
+char	*get_path(char **envp);
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -30,7 +30,7 @@ int	main(int argc, char **argv, char **envp)
 	return (retrn);
 }
 
-static int	fork_time(char **argv, char **envp, int *fildes)
+int	fork_time(char **argv, char **envp, int *fildes)
 {
 	int	status;
 	pid_t	pid_c;
@@ -55,7 +55,7 @@ static int	fork_time(char **argv, char **envp, int *fildes)
 	return (0);
 }
 
-static int	check_child(char *file, char *cmd, char **envp, int *fildes)
+int	check_child(char *file, char *cmd, char **envp, int *fildes)
 {
 	int		file;
 	char	*path;
@@ -71,7 +71,23 @@ static int	check_child(char *file, char *cmd, char **envp, int *fildes)
 	return (do_cmd(cmd, envp, path));
 }
 
-static char	*get_path(char **envp)
+int	check_brother(char *file, char *cmd, char **envp, int *fildes)
+{
+	int		file;
+	char	*path;
+
+	file = open(file, O_TRUNC | O_CREAT | O_RDWR, 00666);
+	if (file < 0)
+		return (full_error(file, ": ", strerror(errno), STDOUT_FILENO));
+	dup2(fildes[0], 0);
+	close(fildes[1]);
+	close(fildes[0]);
+	dup2(file, 1);
+	path = get_path(envp);
+	return (do_cmd(cmd, envp, path));
+}
+
+char	*get_path(char **envp)
 {
 	while (ft_strncmp("PATH", *envp, 4))
 		envp++;
