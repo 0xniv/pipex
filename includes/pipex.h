@@ -6,7 +6,7 @@
 /*   By: nivi <nivi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 12:31:42 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/10 16:41:09 by nivi             ###   ########.fr       */
+/*   Updated: 2023/11/10 19:40:02 by nivi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,7 @@ struct s_pipex
 
 typedef enum e_file_type
 {
-	INFILE,
-	OUTFILE,
-	IN = 0,
+	IN,
 	OUT,
 	ERR,
 }			t_file_type;
