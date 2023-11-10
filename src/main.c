@@ -6,7 +6,7 @@
 /*   By: nivi <nivi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 23:25:32 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/10 16:12:44 by nivi             ###   ########.fr       */
+/*   Updated: 2023/11/10 19:28:59 by nivi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	fork_time(char **argv, char **envp, int *fildes)
 	if (pid_b == -1)
 		return (full_error("fork failed", "", "", OUT));
 	else if (pid_b == 0)
-		check_child(argv[4], argv[3], envp, fildes);
+		check_brother(argv[4], argv[3], envp, fildes);
 	close(fildes[0]);
 	close(fildes[1]);
 	waitpid(pid_c, NULL, 0);
@@ -57,33 +57,33 @@ int	fork_time(char **argv, char **envp, int *fildes)
 
 int	check_child(char *file, char *cmd, char **envp, int *fildes)
 {
-	int		file;
+	int		file_child;
 	char	*path;
 
-	file = open(file, O_RDONLY);
-	if (file < 0)
+	file_child = open(file, O_RDONLY);
+	if (file_child < 0)
 		return (full_error(file, ": ", strerror(errno), OUT));
 	dup2(fildes[1], 1);
 	close(fildes[0]);
 	close(fildes[1]);
-	dup2(file, 0);
-	path = get_path(envp);
+	dup2(file_child, IN);
+	path = get_env(envp);
 	return (build_cmd(cmd, envp, path));
 }
 
 int	check_brother(char *file, char *cmd, char **envp, int *fildes)
 {
-	int		file;
+	int		file_brother;
 	char	*path;
 
-	file = open(file, O_TRUNC | O_CREAT | O_RDWR, 00666);
-	if (file < 0)
+	file_brother = open(file, O_TRUNC | O_CREAT | O_RDWR, 0000666);
+	if (file_brother < 0)
 		return (full_error(file, ": ", strerror(errno), OUT));
 	dup2(fildes[0], 0);
 	close(fildes[1]);
 	close(fildes[0]);
-	dup2(file, 1);
-	path = get_path(envp);
+	dup2(file_brother, 1);
+	path = get_env(envp);
 	return (build_cmd(cmd, envp, path));
 }
 

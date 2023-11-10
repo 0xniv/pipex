@@ -6,7 +6,7 @@
 /*   By: nivi <nivi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 17:35:21 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/10 16:40:59 by nivi             ###   ########.fr       */
+/*   Updated: 2023/11/10 18:15:14 by nivi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,16 @@ int	build_cmd(char *argv, char **envp, char *path)
 		return (full_error("Parsing command fails:", strerror(errno), "", OUT));
 	pipex.paths = ft_split(path, ':');
 	pipex.cmds = get_command(argv);
-	pipex.final = check_command(pipex.cmds[0]);
+	pipex.final = check_commands(pipex.cmds[0]);
 	pipex.cmd = search_path(pipex.final, pipex.paths);
-	ft_free_split(pipex.paths);
-	free(pipex.final);
+	pipex.paths = ft_free_split(pipex.paths);
+	pipex.final = ft_free_str(pipex.final);
 	if (!pipex.cmd)
 	{
 		ft_free_split(pipex.cmds);
 		return (full_error("command not found ", argv, "", 127));
 	}
-	if (execve(pipex.cmd, pipex.paths, envp) < 0)
+	if (execve(pipex.cmd, pipex.cmds, envp) < 0)
 	{
 		free(pipex.cmd);
 		ft_free_split(pipex.cmds);
@@ -77,6 +77,7 @@ char	*check_commands(char *cmd)
 		{
 			final = ft_split(temp, ' ');
 			free(temp);
+			temp = NULL;
 			aux = ft_strdup(final[0]);
 			ft_free_split(final);
 			return (aux);
@@ -100,12 +101,12 @@ char	*search_path(char *final, char **paths)
 	i = 0;
 	while (paths[i])
 	{
-		temp = ft_strjoin(paths[i], '/');
+		temp = ft_strjoin(paths[i], "/");
 		cmd = ft_strjoin(temp, final);
-		free(temp);
-		if (access(cmd, F_OK | X_OK) == 0)
+		ft_free_str(temp);
+		if (access(cmd, F_OK) == 0)
 			return (cmd);
-		free(cmd);
+		ft_free_str(cmd);
 		i++;
 	}
 	return(NULL);

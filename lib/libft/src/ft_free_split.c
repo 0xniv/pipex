@@ -3,24 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_split.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nivi <nivi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 15:10:38 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/04 23:23:23 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/10 17:48:27 by nivi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_free_split(char **split)
+char	**ft_free_split(char **str)
 {
 	int	i;
 
 	i = 0;
-	while (split[i])
+	while (str[i])
 	{
-		free(split[i]);
-		i++;
+		ft_free_str(str[i]);
+		str[i] = NULL;
+		++i;
 	}
-	free(split);
+	free(str);
+	return (NULL);
 }

@@ -8,12 +8,12 @@
 			"name": "(gdb) Launch",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/pipex_bonus",
+			"program": "${workspaceFolder}/pipex",
 			"args": [
-				"/nfs/homes/vde-frei/common_core/pipex/README.md",
+				"/home/nivi/ftprojects/42cursus/c/pipex/Makefile",
 				"sort",
 				"cat",
-				"b"
+				"outfile"
 			],
 			"stopAtEntry": true,
 			"cwd": "${fileDirname}",
@@ -30,17 +30,17 @@
 					"description": "Set Disassembly Flavor to Intel",
 					"text": "-gdb-set disassembly-flavor intel",
 					"ignoreFailures": true
-				},
-				{
-					"description": "Set follow-fork-mode to child",
-					"text": "set follow-fork-mode child",
-					"ignoreFailures": false
-				},
-				{
-					"description": "Set detach-on-fork to off",
-					"text": "set detach-on-fork off",
-					"ignoreFailures": false
 				}
+				// {
+				// 	"description": "Set follow-fork-mode to child",
+				// 	"text": "set follow-fork-mode child",
+				// 	"ignoreFailures": false
+				// },
+				// {
+				// 	"description": "Set detach-on-fork to off",
+				// 	"text": "set detach-on-fork off",
+				// 	"ignoreFailures": false
+				// }
 			]
 		}
 	]

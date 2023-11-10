@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+         #
+#    By: nivi <nivi@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/17 10:03:10 by vde-frei          #+#    #+#              #
-#    Updated: 2023/11/09 10:44:20 by vde-frei         ###   ########.fr        #
+#    Updated: 2023/11/10 17:35:37 by nivi             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,8 +67,7 @@ FTPF = lib/ft_printf/libftprintf.a
 FTPF_PATH = lib/ft_printf
 
 # files #
-CFILES = $(addprefix $(SRC)/, main.c string.c errors.c check_access.c \
-file_management.c)
+CFILES = $(addprefix $(SRC)/, main.c string.c errors.c)
 
 BFILES = $(addprefix $(BONUS)/, main_bonus.c string_bonus.c errors_bonus.c \
 check_access_bonus.c file_management_bonus.c)
@@ -112,7 +111,7 @@ $(OBJ)/%.o: $(SRC)/%.c
 clean:
 	@$(MAKE) fclean -sC $(LIBFT_PATH)
 	@$(MAKE) fclean -sC $(FTPF_PATH)
-	@$(RM) -rf $(OBJ)
+	@$(RM) -rf $(OBJ)/
 	@$(SLEEP)
 	@printf "$(RED)$(CLEAN)$(RESET)\n"
 
