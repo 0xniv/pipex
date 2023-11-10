@@ -6,15 +6,16 @@
 /*   By: nivi <nivi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 23:25:32 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/10 13:01:02 by nivi             ###   ########.fr       */
+/*   Updated: 2023/11/10 13:24:17 by nivi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static void fork_time(char **argv, char **envp, int *fildes);
-static void	second_process(char **argv, int *pipedes, char **envp);
-static void	execution(char *cmd_arg, char **env);
+static int	fork_time(char **argv, char **envp, int *fildes);
+static int	check_child(char *file, char *cmd, char **envp, int *fildes);
+static int	check_brother(char *file, char *cmd, char **envp, int *fildes);
+static char	*get_path(char **envp);
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -29,7 +30,7 @@ int	main(int argc, char **argv, char **envp)
 	return (retrn);
 }
 
-static void	fork_time(char **argv, char **envp, int *fildes)
+static int	fork_time(char **argv, char **envp, int *fildes)
 {
 	int	status;
 	pid_t	pid_c;
@@ -38,5 +39,41 @@ static void	fork_time(char **argv, char **envp, int *fildes)
 	pid_c = fork();
 	if (pid_c == - 1)
 		return (full_error("fork failed", "", "", STDOUT_FILENO));
+	else if (pid_c == 0)
+		check_child(argv[1], argv[2], envp, fildes);
+	pid_b = fork();
+	if (pid_b == - 1)
+		return (full_error("fork failed", "", "", STDOUT_FILENO));
+	else if (pid_b == 0)
+		check_child(argv[4], argv[3], envp, fildes);
+	close(fildes[0]);
+	close(fildes[1]);
+	waitpid(pid_c, NULL, 0);
+	waitpid(pid_b, &status, 0);
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	return (0);
+}
 
+static int	check_child(char *file, char *cmd, char **envp, int *fildes)
+{
+	int		file;
+	char	*path;
+
+	file = open(file, O_RDONLY);
+	if (file < 0)
+		return (full_error(file, ": ", strerror(errno), STDOUT_FILENO));
+	dup2(fildes[1], 1);
+	close(fildes[0]);
+	close(fildes[1]);
+	dup2(file, 0);
+	path = get_path(envp);
+	return (do_cmd(cmd, envp, path));
+}
+
+static char	*get_path(char **envp)
+{
+	while (ft_strncmp("PATH", *envp, 4))
+		envp++;
+	return (*envp + 5);
 }
