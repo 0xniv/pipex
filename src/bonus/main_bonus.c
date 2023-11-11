@@ -6,7 +6,7 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 23:25:32 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/11 05:40:47 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/11 06:41:09 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,12 @@ char	*get_env(char **envp);
 int	main(int argc, char **argv, char **envp)
 {
 	int	fildes[2];
-	int	retrn;
 
 	if (argc != 5)
 		return (full_error("4 arguments needed: ", "", "", OUT));
 	if (pipe(fildes) < 0)
 		return (full_error("pipe error", "", "", OUT));
-	retrn = fork_time(argv, envp, fildes); 
-	return (retrn);
+	return (fork_time(argv, envp, fildes));
 }
 
 int	fork_time(char **argv, char **envp, int *fildes)
