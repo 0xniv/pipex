@@ -3,107 +3,93 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nivi <nivi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 23:25:32 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/10 09:29:28 by nivi             ###   ########.fr       */
+/*   Updated: 2023/11/11 05:40:47 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/pipex_bonus.h"
 
-static void	execution(char *cmd_arg, char **env);
-static void	verify_fork(pid_t *pid, int *pipedes, char *cmd, char **env);
-static void		close_fd(int *in, int *out);
-void		make_pipe(char *argv, char **env);
+int		fork_time(char **argv, char **envp, int *fildes);
+int		check_child(char *file, char *cmd, char **envp, int *fildes);
+int		check_brother(char *file, char *cmd, char **envp, int *fildes);
+char	*get_env(char **envp);
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_pipe	pype;
+	int	fildes[2];
+	int	retrn;
 
-	if (argc < 5)
-		invalid_args();
-	if (ft_strncmp(argv[1], HERE_STR, ft_strlen(HERE_STR)) == 0)
-	{
-		if (argc < 6)
-			invalid_args();
-		pype.current_cmd = HERE_CMD;
-		pype.fd_out = open_file(argv[argc - 1], F_APPEND);
-		here_doc(argv);
-	}
-	else
-	{
-		pype.current_cmd = INIT_CMD;
-		pype.fd_in = open_file(argv[1], INFILE);
-		pype.fd_out = open_file(argv[argc - 1], OUTFILE);
-		dup2(pype.fd_in, STD_INPUT);
-	}
-	while (pype.current_cmd < argc -2)
-		make_pipe(argv[pype.current_cmd++], envp);
-	dup2(pype.fd_out, STDOUT_FILENO);
-	execution(argv[pype.current_cmd], envp);
-	close_fd(&pype.fd_in, &pype.fd_out);
-	wait(NULL);
-	return (0);
+	if (argc != 5)
+		return (full_error("4 arguments needed: ", "", "", OUT));
+	if (pipe(fildes) < 0)
+		return (full_error("pipe error", "", "", OUT));
+	retrn = fork_time(argv, envp, fildes); 
+	return (retrn);
 }
 
-static void	execution(char *cmd_arg, char **env)
+int	fork_time(char **argv, char **envp, int *fildes)
 {
-	t_pipe	*pype;
-	char	**cmd_n_flags;
+	int		status;
+	pid_t	pid_c;
+	pid_t	pid_b;
 
-	pype = ft_calloc(1, sizeof(t_pipe));
-	pype->path = get_paths(pype->path, env);
-	cmd_n_flags = ft_split(cmd_arg, ' ');
-	pype->access = check_access(&pype, cmd_n_flags[0]);
-	if (pype->access == 0)
-		execve(pype->path[pype->pos], cmd_n_flags, env);
-	free(*(pype)->path);
-	ft_free_split(cmd_n_flags);
-	perror(NULL);
-	exit(errno);
+	pid_c = fork();
+	if (pid_c == -1)
+		return (full_error("fork failed", "", "", OUT));
+	else if (pid_c == 0)
+		check_child(argv[1], argv[2], envp, fildes);
+	pid_b = fork();
+	if (pid_b == -1)
+		return (full_error("fork failed", "", "", OUT));
+	else if (pid_b == 0)
+		check_brother(argv[4], argv[3], envp, fildes);
+	close(fildes[0]);
+	close(fildes[1]);
+	waitpid(pid_c, NULL, 0);
+	waitpid(pid_b, &status, 0);
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	return (IN);
 }
 
-void	make_pipe(char *cmd, char **env)
+int	check_child(char *file, char *cmd, char **envp, int *fildes)
 {
-	pid_t	pid;
-	pid_t	pid_2;
-	int		pipedes[2];
+	int		file_child;
+	char	*path;
 
-	if (pipe(pipedes) == -1)
-		end();
-	pid = fork();
-	if (pid == 0)
-	{
-		verify_fork(&pid, pipedes, cmd, env);
-	}
-	pid_2 = fork();
-	if (pid_2 == 0)
-	{
-		verify_fork(&pid_2, pipedes, cmd, env);
-	}
+	file_child = open(file, O_RDONLY);
+	if (file_child < 0)
+		return (full_error(file, ": ", strerror(errno), OUT));
+	dup2(fildes[1], 1);
+	close(fildes[0]);
+	close(fildes[1]);
+	dup2(file_child, IN);
+	path = get_env(envp);
+	return (build_cmd(cmd, envp, path));
 }
 
-static void	verify_fork(pid_t *pid, int *pipedes, char *cmd, char **env)
+int	check_brother(char *file, char *cmd, char **envp, int *fildes)
 {
-	if (*pid == -1)
-		end();
-	printf("\ncheguei aqui?? %d\n", getpid());
-	if (*pid == 0)
-	{
-		close(pipedes[0]);
-		dup2(pipedes[1], STDOUT_FILENO);
-		execution(cmd, env);
-	}
-	else
-	{
-		close(pipedes[1]);
-		dup2(pipedes[0], STD_INPUT);
-	}
+	int		file_brother;
+	char	*path;
+
+	file_brother = open(file, O_TRUNC | O_CREAT | O_RDWR, 0000666);
+	if (file_brother < 0)
+		return (full_error(file, ": ", strerror(errno), OUT));
+	dup2(fildes[0], 0);
+	close(fildes[1]);
+	close(fildes[0]);
+	dup2(file_brother, 1);
+	path = get_env(envp);
+	return (build_cmd(cmd, envp, path));
 }
 
-static void	close_fd(int *in, int *out)
+char	*get_env(char **envp)
 {
-	close(*in);
-	close(*out);
+	while (ft_strncmp("PATH", *envp, 4))
+		envp++;
+	return (*envp + 5);
 }

@@ -1,3 +1,0 @@
-open fd in and ou
-open fd in with dup to write...
-do a loop while 

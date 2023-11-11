@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ../../includes/pipex_bonus.h                                      :+:      :+:    :+:   */
+/*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nivi <nivi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 12:31:42 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/08 13:24:41 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/10 19:40:02 by nivi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_BONUS_H
-# define PIPEX_BONUS_H
+#ifndef PIPEX_H
+# define PIPEX_H
 
 /* libft */
 # include "../lib/libft/includes/libft.h"
@@ -44,43 +44,37 @@
 /* defines */
 
 # define ERRFD "Error in fd creation"
-# define HERE_STR "here_doc"
 
 /* =========================================================== */
 
 /* structs */
-typedef struct s_pipe	t_pipe;
-struct s_pipe
+typedef struct s_pipex	t_pipex;
+struct s_pipex
 {
-	int		current_cmd;
-	int		fd_in;
-	int		fd_out;
-	int		access;
-	pid_t	pid_0;
-	pid_t	pid_1;
-	size_t	pos;
-	char	**path;
-	char	**cmd;
+	char	**paths;
+	char	**cmds;
+	char	*cmd;
+	char	*final;
 };
 
 typedef enum e_file_type
 {
-	INFILE,
-	OUTFILE,
-	F_APPEND,
-	INIT_CMD = 2,
-	HERE_CMD,
-	STD_INPUT = 0,
+	IN,
+	OUT,
+	ERR,
 }			t_file_type;
 
 /* =========================================================== */
 
 /* functions */
-void	invalid_args(void);
-void	here_doc(char **argv);
-void	end(void);
-char	**get_paths(char **path, char **envp);
-int		check_access(t_pipe	**pipe, char *command);
-int		open_file(char *file, t_file_type in_out);
+int		full_error(char *str1, char *str2, char *str3, unsigned int retrn);
+int		fork_time(char **argv, char **envp, int *fildes);
+int		check_child(char *file, char *cmd, char **envp, int *fildes);
+int		check_brother(char *file, char *cmd, char **envp, int *fildes);
+int		build_cmd(char *argv, char **envp, char *path);
+char	*get_env(char **envp);
+char	*check_commands(char *cmd);
+char	*search_path(char *final, char **paths);
+char	**get_command(char *argv);
 
 #endif

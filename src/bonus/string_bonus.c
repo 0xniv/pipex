@@ -6,66 +6,108 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 17:35:21 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/09 12:32:45 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/11 05:39:56 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/pipex_bonus.h"
 
-static void	manage_here_doc(char **argv, int *pipedes);
+char	**get_command(char *argv);
+char	*check_commands(char *cmd);
+char	*search_path(char *final, char **paths);
 
-char	**get_paths(char **path, char **envp)
+int	build_cmd(char *argv, char **envp, char *path)
 {
-	int	index;
+	t_pipex	pipex;
 
-	index = -1;
-	while (envp[++index] != NULL)
-		if (ft_strnstr(envp[index], "PATH=", 5) != NULL)
-			path = ft_split(envp[index] + 5, ':');
-	index = -1;
-	while (path[++index] != NULL)
-		path[index] = ft_strjoin(path[index], "/");
-	if (path == NULL)
+	if (!argv)
+		return (full_error("Parsing command fails:", strerror(errno), "", OUT));
+	pipex.paths = ft_split(path, ':');
+	pipex.cmds = get_command(argv);
+	pipex.final = check_commands(pipex.cmds[0]);
+	pipex.cmd = search_path(pipex.final, pipex.paths);
+	pipex.paths = ft_free_split(pipex.paths);
+	pipex.final = ft_free_str(pipex.final);
+	if (!pipex.cmd)
 	{
-		ft_putstr_fd("pipex: command not found: ", STDERR_FILENO);
-		ft_free_split(path);
-		exit(127);
+		ft_free_split(pipex.cmds);
+		return (full_error("command not found ", argv, "", 127));
 	}
-	return (path);
-}
-
-void	here_doc(char **argv)
-{
-	int	pipedes[2];
-	pid_t	pid;
-
-	if (pipe(pipedes) == -1)
-		end();
-	pid = fork();
-	if (pid == -1)
-		end();
-	if (!pid)	
-		manage_here_doc(argv, pipedes);
-}
-
-static void	manage_here_doc(char **argv, int *pipedes)
-{
-	char	*line;
-	char	*limiter;
-	size_t	limiter_len;
-
-	limiter = argv[2];
-	limiter_len = ft_strlen(argv[2]);
-	close(pipedes[0]);
-	while (1)
+	if (execve(pipex.cmd, pipex.cmds, envp) < 0)
 	{
-		line = get_next_line(STD_INPUT);
-		if (ft_strncmp(line, limiter, limiter_len) == 0)
+		free(pipex.cmd);
+		ft_free_split(pipex.cmds);
+		return (full_error("execve failed", "", "", 127));
+	}
+	return (IN);
+}
+
+char	**get_command(char *argv)
+{
+	int			i;
+	char		**cmds;
+
+	i = ft_strlen(argv);
+	while (argv[i] != 0x27 && argv[i] != 0x22 && i != 0)
+		--i;
+	if (i == 0)
+		cmds = ft_split(argv, ' ');
+	else
+	{
+		if (argv[i] == 39)
+			cmds = ft_split(argv, 0x27);
+		else
+			cmds = ft_split(argv, 0x22);
+	}
+	return (cmds);
+}
+
+char	*check_commands(char *cmd)
+{
+	char	*temp;
+	char	*aux;
+	char	**final;
+	size_t	i;
+
+	i = 0;
+	temp = ft_strdup(cmd);
+	while (temp[i] != '\0')
+	{
+		if (temp[i] == ' ')
 		{
-			free(line);
-			exit(EXIT_SUCCESS);
+			final = ft_split(temp, ' ');
+			free(temp);
+			temp = NULL;
+			aux = ft_strdup(final[0]);
+			ft_free_split(final);
+			return (aux);
 		}
-		ft_putstr_fd(line, pipedes[1]);
-		free(line);
+		++i;
 	}
+	return (temp);
+}
+
+char	*search_path(char *final, char **paths)
+{
+	char	*temp;
+	char	*cmd;
+	int		i;
+
+	if (access(final, F_OK | X_OK) == 0)
+	{
+		cmd = ft_strdup(final);
+		return (cmd);
+	}
+	i = 0;
+	while (paths[i])
+	{
+		temp = ft_strjoin(paths[i], "/");
+		cmd = ft_strjoin(temp, final);
+		ft_free_str(temp);
+		if (access(cmd, F_OK) == 0)
+			return (cmd);
+		ft_free_str(cmd);
+		i++;
+	}
+	return (NULL);
 }
