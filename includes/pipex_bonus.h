@@ -6,7 +6,7 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 12:31:42 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/12 05:22:09 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/12 06:01:15 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,9 @@ typedef enum e_file_type
 /* =========================================================== */
 
 /* functions */
-int		full_error(char *str1, char *str2, char *str3, unsigned int retrn);
-int		fork_time(char **argv, char **envp, int *fildes);
-int		check_child(char *file, char *cmd, char **envp, int *fildes);
-int		check_brother(char *file, char *cmd, char **envp, int *fildes);
-int		build_cmd(char *argv, char **envp, char *path);
-char	*get_env(char **envp);
-char	*check_commands(char *cmd);
-char	*search_path(char *final, char **paths);
-char	**get_command(char *argv);
-
+int	full_error(char *str1, char *str2, char *str3, unsigned int retrn);
+int	start_struct(t_pipex *bonus, int argc, char **argv);
+int	check_child(t_pipex bonus, char **argv, char **envp);
+int	files_open(t_pipex *bonus, char **argv);
+int	end_struc(t_pipex *bonus);
 #endif

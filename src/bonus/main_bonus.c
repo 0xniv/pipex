@@ -6,7 +6,7 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 23:25:32 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/12 05:32:34 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/12 06:05:16 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	start_struct(t_pipex *bonus, int argc, char **argv);
 int	check_child(t_pipex bonus, char **argv, char **envp);
+int	files_open(t_pipex *bonus, char **argv);
+int	end_struct(t_pipex *bonus);
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -45,6 +47,42 @@ int	start_struct(t_pipex *bonus, int argc, char **argv)
 	return (ret);
 }
 
+int	files_open(t_pipex *bonus, char **argv)
+{
+	if (!ft_strncmp(argv[1], "here_doc", 8))
+	{
+		bonus->input = open(argv[1], O_RDONLY);
+		if (bonus->input < 0)
+			return (full_error("input file error", " : ", strerror(errno), OUT));
+		bonus->output = open(argv[bonus->args - 1], O_APPEND | O_CREAT | \
+		O_RDWR, 0000666);
+		if (bonus->output < 0)
+			return (full_error(argv[bonus->args - 1], ": ", strerror(errno), 1));
+	}
+	else
+	{
+		bonus->input = open(argv[1], O_RDONLY);
+		if (bonus->input < 0)
+			return (full_error(argv[1], ": ", strerror(errno), OUT));
+		bonus->output = open(argv[bonus->args - 1], O_TRUNC | O_CREAT | \
+		O_RDWR, 0000666);
+		if (bonus->output < 0)
+			return (full_error(argv[bonus->args - 1], ": ", strerror(errno), \
+			OUT));
+	}
+}
+
+int	end_struct(t_pipex *bonus)
+{
+	free(bonus->pipes);
+	bonus->pipes = NULL;
+	close(bonus->input);
+	close(bonus->output);
+	if (WIFEXITED(bonus->status))
+		return (WEXITSTATUS(bonus->status));
+	return (0);
+}
+
 int	check_child(t_pipex bonus, char **argv, char **envp)
 {
 	while (bonus.index < (bonus.args - 3))
@@ -66,27 +104,4 @@ int	check_child(t_pipex bonus, char **argv, char **envp)
 	//TODO close_fd
 	waitpid(-1, &bonus.status, IN);
 	return (end_struct(&bonus));
-}
-
-int	check_brother(char *file, char *cmd, char **envp, int *fildes)
-{
-	int		file_brother;
-	char	*path;
-
-	file_brother = open(file, O_TRUNC | O_CREAT | O_RDWR, 0000666);
-	if (file_brother < 0)
-		return (full_error(file, ": ", strerror(errno), OUT));
-	dup2(fildes[0], 0);
-	close(fildes[1]);
-	close(fildes[0]);
-	dup2(file_brother, 1);
-	path = get_env(envp);
-	return (build_cmd(cmd, envp, path));
-}
-
-char	*get_env(char **envp)
-{
-	while (ft_strncmp("PATH", *envp, 4))
-		envp++;
-	return (*envp + 5);
 }
