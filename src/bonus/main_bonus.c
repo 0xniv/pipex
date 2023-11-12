@@ -6,7 +6,7 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 23:25:32 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/12 13:36:18 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/12 14:23:31 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	start_struct(t_pipex *bonus, int argc, char **argv)
 	if (ret)
 		return (ret);
 	bonus->aux = 0;
-	ret = do_pipes(bonus);
+	ret = make_pipes(bonus);
 	if (ret)
 		return (ret);
 	bonus->index = 0;

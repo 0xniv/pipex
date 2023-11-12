@@ -6,7 +6,7 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 12:31:42 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/12 13:34:08 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/12 14:33:51 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,6 @@
 
 /* libft */
 # include "../lib/libft/includes/libft.h"
-
-/* ft_printf */
-# include "../lib/ft_printf/includes/ft_printf_bonus.h"
 
 /* both to open */
 # include <sys/stat.h>

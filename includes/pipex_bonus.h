@@ -6,7 +6,7 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 12:31:42 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/12 13:36:08 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/12 14:34:03 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,6 @@
 
 /* libft */
 # include "../lib/libft/includes/libft.h"
-
-/* ft_printf */
-# include "../lib/ft_printf/includes/ft_printf_bonus.h"
 
 /* both to open */
 # include <sys/stat.h>
@@ -28,7 +25,10 @@
 
 /* malloc and free, exit */
 # include <stdlib.h>
+
+/* type libs */
 # include <stddef.h>
+# include <sys/types.h>
 
 /* perror */
 # include <stdio.h>
@@ -75,6 +75,7 @@ typedef enum e_file_type
 
 /* functions */
 int		full_error(char *str1, char *str2, char *str3, unsigned int retrn);
+int		heredoc(char **argv, char **envp, int argc);
 int		start_struct(t_pipex *bonus, int argc, char **argv);
 int		check_child(t_pipex bonus, char **argv, char **envp);
 int		files_open(t_pipex *bonus, char **argv);
@@ -82,6 +83,7 @@ int		end_struct(t_pipex *bonus);
 int		child_in(t_pipex bonus, char *argv, char **envp);
 int		child_mid(t_pipex bonus, char *argv, char **envp);
 int		child_out(t_pipex bonus, char *argv, char **envp);
+int		make_pipes(t_pipex *bonus);
 void	close_fd(t_pipex *bonus);
 void	free_strings(t_pipex *bonus);
 char	*get_env(char **envp);

@@ -6,7 +6,7 @@
 #    By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/17 10:03:10 by vde-frei          #+#    #+#              #
-#    Updated: 2023/11/12 13:23:46 by vde-frei         ###   ########.fr        #
+#    Updated: 2023/11/12 14:34:43 by vde-frei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ COMP = Compiling
 
 # debbug and normal flags #
 DFLAGS = -Wall -Wextra -Werror -g3 # TO DEBBUG
-CFLAGS = -Wall -Werror -Wextra -g3 # -O3 -fomit-frame-pointer -finline-functions # TO IMPROVE PERFORMANCE
+CFLAGS = -Wall -Werror -Wextra -g3 -O3 -fomit-frame-pointer -finline-functions # TO IMPROVE PERFORMANCE
 
 # paths #
 SRC = src
@@ -57,14 +57,11 @@ INC = includes
 OBJ = obj
 
 # libs #
-INCLUDES = -I$(INC)/ -Ilib/libft/includes/ -Ilib/ft_printf/includes/
-LINCLUDES = -L$(LIBFT_PATH) -lft -L$(FTPF_PATH) -lft
+INCLUDES = -I$(INC)/ -Ilib/libft/includes/
+LINCLUDES = -L$(LIBFT_PATH) -lft
 
 LIBFT = lib/libft/libft.a
 LIBFT_PATH = lib/libft
-
-FTPF = lib/ft_printf/libftprintf.a
-FTPF_PATH = lib/ft_printf
 
 # files #
 CFILES = $(addprefix $(SRC)/, main.c string.c errors.c)
@@ -95,8 +92,7 @@ all: $(OBJ) $(NAME)
 
 $(NAME): $(OBJECT)
 	@$(MAKE) -sC $(LIBFT_PATH)
-	@$(MAKE) bonus -sC $(FTPF_PATH)
-	@$(CC) $(CFLAGS) $(INCLUDES) $(LINCLUDES) $(OBJECT) $(LIBFT) $(FTPF) -o $(NAME)
+	@$(CC) $(CFLAGS) $(INCLUDES) $(LINCLUDES) $(OBJECT) $(LIBFT) -o $(NAME)
 	@$(SLEEP)
 	@printf "\n$(MAGENTA)$(MANDATORY)\n$(RESET)"
 
@@ -110,7 +106,6 @@ $(OBJ)/%.o: $(SRC)/%.c
 
 clean:
 	@$(MAKE) fclean -sC $(LIBFT_PATH)
-	@$(MAKE) fclean -sC $(FTPF_PATH)
 	@$(RM) -rf $(OBJ)/
 	@$(SLEEP)
 	@printf "$(RED)$(CLEAN)$(RESET)\n"
