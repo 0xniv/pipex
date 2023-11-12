@@ -1,45 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   string_bonus.c                                     :+:      :+:    :+:   */
+/*   fork_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/04 17:35:21 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/11 05:39:56 by vde-frei         ###   ########.fr       */
+/*   Created: 2023/11/12 05:32:55 by vde-frei          #+#    #+#             */
+/*   Updated: 2023/11/12 13:20:49 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/pipex_bonus.h"
 
-char	**get_command(char *argv);
-char	*check_commands(char *cmd);
-char	*search_path(char *final, char **paths);
-
-int	build_cmd(char *argv, char **envp, char *path)
+char	*get_env(char **envp)
 {
-	t_pipex	pipex;
-
-	if (!argv)
-		return (full_error("Parsing command fails:", strerror(errno), "", OUT));
-	pipex.paths = ft_split(path, ':');
-	pipex.cmds = get_command(argv);
-	pipex.final = check_commands(pipex.cmds[0]);
-	pipex.cmd = search_path(pipex.final, pipex.paths);
-	pipex.paths = ft_free_split(pipex.paths);
-	pipex.final = ft_free_str(pipex.final);
-	if (!pipex.cmd)
-	{
-		ft_free_split(pipex.cmds);
-		return (full_error("command not found ", argv, "", 127));
-	}
-	if (execve(pipex.cmd, pipex.cmds, envp) < 0)
-	{
-		free(pipex.cmd);
-		ft_free_split(pipex.cmds);
-		return (full_error("execve failed", "", "", 127));
-	}
-	return (IN);
+	while (ft_strncmp("PATH", *envp, 4))
+		envp++;
+	return (*envp + 5);
 }
 
 char	**get_command(char *argv)

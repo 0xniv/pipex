@@ -6,7 +6,7 @@
 #    By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/17 10:03:10 by vde-frei          #+#    #+#              #
-#    Updated: 2023/11/12 05:33:29 by vde-frei         ###   ########.fr        #
+#    Updated: 2023/11/12 13:23:46 by vde-frei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,7 @@ FTPF_PATH = lib/ft_printf
 CFILES = $(addprefix $(SRC)/, main.c string.c errors.c)
 
 BFILES = $(addprefix $(BONUS)/, main_bonus.c string_bonus.c errors_bonus.c \
-fork_bonus.c
+child_bonus.c heredoc_bonus.c)
 
 # obj dir #
 OBJECT =  $(patsubst %, $(OBJ)/%, $(notdir $(CFILES:.c=.o)))

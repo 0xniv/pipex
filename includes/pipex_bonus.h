@@ -6,7 +6,7 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 12:31:42 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/12 08:05:47 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/12 13:36:08 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 
 /* malloc and free, exit */
 # include <stdlib.h>
+# include <stddef.h>
 
 /* perror */
 # include <stdio.h>
@@ -38,12 +39,6 @@
 
 /* wait, waitpid */
 # include <sys/wait.h>
-
-/* =========================================================== */
-
-/* defines */
-
-# define ERRFD "Error in fd creation"
 
 /* =========================================================== */
 
@@ -83,8 +78,10 @@ int		full_error(char *str1, char *str2, char *str3, unsigned int retrn);
 int		start_struct(t_pipex *bonus, int argc, char **argv);
 int		check_child(t_pipex bonus, char **argv, char **envp);
 int		files_open(t_pipex *bonus, char **argv);
-int		end_struc(t_pipex *bonus);
-void	free_string(t_pipex *bonus);
+int		end_struct(t_pipex *bonus);
+int		child_in(t_pipex bonus, char *argv, char **envp);
+int		child_mid(t_pipex bonus, char *argv, char **envp);
+int		child_out(t_pipex bonus, char *argv, char **envp);
 void	close_fd(t_pipex *bonus);
 void	free_strings(t_pipex *bonus);
 char	*get_env(char **envp);
