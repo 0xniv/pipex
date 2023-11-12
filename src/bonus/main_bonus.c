@@ -6,7 +6,7 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 23:25:32 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/12 06:05:16 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/12 08:12:40 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,12 @@ int	files_open(t_pipex *bonus, char **argv)
 	{
 		bonus->input = open(argv[1], O_RDONLY);
 		if (bonus->input < 0)
-			return (full_error("input file error", " : ", strerror(errno), OUT));
+			return (full_error("input file error", ": ", strerror(errno), OUT));
 		bonus->output = open(argv[bonus->args - 1], O_APPEND | O_CREAT | \
 		O_RDWR, 0000666);
 		if (bonus->output < 0)
-			return (full_error(argv[bonus->args - 1], ": ", strerror(errno), 1));
+			return (full_error(argv[bonus->args - 1], ": ", \
+			strerror(errno), 1));
 	}
 	else
 	{
@@ -70,6 +71,7 @@ int	files_open(t_pipex *bonus, char **argv)
 			return (full_error(argv[bonus->args - 1], ": ", strerror(errno), \
 			OUT));
 	}
+	return (IN);
 }
 
 int	end_struct(t_pipex *bonus)
@@ -80,7 +82,7 @@ int	end_struct(t_pipex *bonus)
 	close(bonus->output);
 	if (WIFEXITED(bonus->status))
 		return (WEXITSTATUS(bonus->status));
-	return (0);
+	return (IN);
 }
 
 int	check_child(t_pipex bonus, char **argv, char **envp)
@@ -93,15 +95,15 @@ int	check_child(t_pipex bonus, char **argv, char **envp)
 		else if (bonus.pid == 0)
 		{
 			if (bonus.index == 0)
-				//TODO child_in
+				child_in(bonus, argv[2], envp);
 			else if (bonus.index == bonus.args - 4)
-				//TODO child_out
+				child_out(bonus, argv[2 + bonus.index], envp);
 			else
-				//todo child_mid
+				child_mid(bonus, argv[2 + bonus.index], envp);
 		}
 		bonus.index++;
 	}
-	//TODO close_fd
+	close_fd(&bonus);
 	waitpid(-1, &bonus.status, IN);
 	return (end_struct(&bonus));
 }
