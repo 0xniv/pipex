@@ -6,7 +6,7 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 12:31:42 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/11 05:42:50 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/12 05:22:09 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,22 @@
 typedef struct s_pipex	t_pipex;
 struct s_pipex
 {
-	char	**paths;
-	char	**cmds;
+	int		args;
+	int		input;
+	int		output;
+	int		index;
+	int		ret;
+	int		status;
+	int		aux;
+	int		*pipes;
+	char	*paths;
+	char	**paths_split;
 	char	*cmd;
+	char	**commands;
 	char	*final;
+	pid_t	pid;
+	pid_t	pid_c;
+	pid_t	pid_b;
 };
 
 typedef enum e_file_type

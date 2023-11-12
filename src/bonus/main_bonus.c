@@ -6,67 +6,66 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 23:25:32 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/11 06:41:09 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/12 05:32:34 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/pipex_bonus.h"
 
-int		fork_time(char **argv, char **envp, int *fildes);
-int		check_child(char *file, char *cmd, char **envp, int *fildes);
-int		check_brother(char *file, char *cmd, char **envp, int *fildes);
-char	*get_env(char **envp);
+int	start_struct(t_pipex *bonus, int argc, char **argv);
+int	check_child(t_pipex bonus, char **argv, char **envp);
 
 int	main(int argc, char **argv, char **envp)
 {
-	int	fildes[2];
+	t_pipex	bonus;
 
-	if (argc != 5)
+	if (argc < 5)
 		return (full_error("4 arguments needed: ", "", "", OUT));
-	if (pipe(fildes) < 0)
-		return (full_error("pipe error", "", "", OUT));
-	return (fork_time(argv, envp, fildes));
+	if (!ft_strncmp(argv[1], "here_doc", 8))
+		return (heredoc(argv, envp, argc));
+	bonus.ret = start_struct(&bonus, argc, argv);
+	bonus.ret = check_child(bonus, argv, envp);
+	return (bonus.ret);
 }
 
-int	fork_time(char **argv, char **envp, int *fildes)
+int	start_struct(t_pipex *bonus, int argc, char **argv)
 {
-	int		status;
-	pid_t	pid_c;
-	pid_t	pid_b;
+	int	ret;
 
-	pid_c = fork();
-	if (pid_c == -1)
-		return (full_error("fork failed", "", "", OUT));
-	else if (pid_c == 0)
-		check_child(argv[1], argv[2], envp, fildes);
-	pid_b = fork();
-	if (pid_b == -1)
-		return (full_error("fork failed", "", "", OUT));
-	else if (pid_b == 0)
-		check_brother(argv[4], argv[3], envp, fildes);
-	close(fildes[0]);
-	close(fildes[1]);
-	waitpid(pid_c, NULL, 0);
-	waitpid(pid_b, &status, 0);
-	if (WIFEXITED(status))
-		return (WEXITSTATUS(status));
-	return (IN);
+	ret = 0;
+	bonus->args = argc;
+	ret = files_open(bonus, argv);
+	if (ret)
+		return (ret);
+	bonus->aux = 0;
+	ret = do_pipes(bonus);
+	if (ret)
+		return (ret);
+	bonus->index = 0;
+	return (ret);
 }
 
-int	check_child(char *file, char *cmd, char **envp, int *fildes)
+int	check_child(t_pipex bonus, char **argv, char **envp)
 {
-	int		file_child;
-	char	*path;
-
-	file_child = open(file, O_RDONLY);
-	if (file_child < 0)
-		return (full_error(file, ": ", strerror(errno), OUT));
-	dup2(fildes[1], 1);
-	close(fildes[0]);
-	close(fildes[1]);
-	dup2(file_child, IN);
-	path = get_env(envp);
-	return (build_cmd(cmd, envp, path));
+	while (bonus.index < (bonus.args - 3))
+	{
+		bonus.pid = fork();
+		if (bonus.pid < 0)
+			return (full_error("fork failed", "", "", OUT));
+		else if (bonus.pid == 0)
+		{
+			if (bonus.index == 0)
+				//TODO child_in
+			else if (bonus.index == bonus.args - 4)
+				//TODO child_out
+			else
+				//todo child_mid
+		}
+		bonus.index++;
+	}
+	//TODO close_fd
+	waitpid(-1, &bonus.status, IN);
+	return (end_struct(&bonus));
 }
 
 int	check_brother(char *file, char *cmd, char **envp, int *fildes)
