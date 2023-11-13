@@ -6,7 +6,7 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 12:31:42 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/12 22:32:32 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/12 23:21:02 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ int		child_out(t_pipex bonus, char *argv, char **envp);
 int		make_pipes(t_pipex *bonus);
 void	close_fd(t_pipex *bonus);
 void	free_strings(t_pipex *bonus);
-char	*get_env(char **envp);
 char	**get_command(char *argv);
 char	*get_env(char **envp);
 char	*check_commands(char *cmd);
