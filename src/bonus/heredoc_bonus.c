@@ -6,7 +6,7 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 13:36:40 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/12 16:14:32 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/12 22:49:33 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ int	heredoc(char **argv, char **envp, int argc)
 	{
 		write(OUT, "heredoc> ", 9);
 		buf = get_next_line(0);
-		if (ft_strlen(buf) == (ft_strlen(argv[2]) + 1) && \
-		(!ft_strncmp(buf, argv[2], ft_strlen(argv[2]))))
+		if (ft_strncmp(buf, argv[2], ft_strlen(argv[2])) == 0)
 			break ;
+		ft_putstr_fd(buf, fd);
 		ft_free_str(buf);
 	}
 	ft_free_str(buf);
@@ -38,8 +38,8 @@ int	heredoc(char **argv, char **envp, int argc)
 	doc.index = 0;
 	doc.aux = 1;
 	doc.ret = check_child_here(doc, argv, envp);
-	close(fd);
 	unlink(argv[1]);
+	close(fd);
 	return (doc.ret);
 }
 

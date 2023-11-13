@@ -6,7 +6,7 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 13:19:43 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/12 14:25:05 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/12 22:17:33 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	make_pipes(t_pipex *bonus)
 	{
 		if (pipe(bonus->pipes + (2 * i)) < 0)
 			return (full_error("pipe error", "", "", OUT));
-		++i;
+		i++;
 	}
 	return (0);
 }

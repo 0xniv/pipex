@@ -6,7 +6,7 @@
 /*   By: vde-frei <vde-frei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 18:39:06 by vde-frei          #+#    #+#             */
-/*   Updated: 2023/11/12 08:11:25 by vde-frei         ###   ########.fr       */
+/*   Updated: 2023/11/12 22:50:57 by vde-frei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ void	close_fd(t_pipex *bonus)
 
 	i = 0;
 	while (i < 2 * (bonus->args - 4 - bonus->aux))
-		close(bonus->pipes[i++]);
+	{
+		close(bonus->pipes[i]);
+		i++;
+	}
 }
 
 void	free_strings(t_pipex *bonus)
