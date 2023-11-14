@@ -4,6 +4,7 @@
 		"*.tcc": "cpp",
 		"fstream": "cpp",
 		"sstream": "cpp",
-		"pipex_bonus.h": "c"
+		"pipex_bonus.h": "c",
+		"stdio.h": "c"
 	},
 }
