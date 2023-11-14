@@ -34,4 +34,4 @@ $> ./pipex here_doc LIMITER cmd1 cmd2 file2
 ```ssh
 git@github.com:vinicius-f-pereira/pipex.git
 ```
-Use o comando `make` ou `make bonus` e para usar siga as instruções da [Primeira Parte](#pipex)
+Use o comando `make` ou `make bonus` e para usar siga as instruções da [Primeira Parte](#primeira-parte-mandatório)
