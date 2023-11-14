@@ -1,4 +1,6 @@
-[![eng](../../../stuff/blob/master/USA-icon.png)](README.md) ![pt-BR](../../../stuff/blob/master/Brazil-icon.png)
+[![eng](../../../stuff/blob/main/USA-icon.png)](README.md) ![pt-BR](../../../stuff/blob/main/Brazil-icon.png)
+
+
 
 # `pipex`
 
@@ -27,3 +29,9 @@ $> cmd1 << LIMITADOR | cmd2 >> arquivo2
 
 $> ./pipex here_doc LIMITER cmd1 cmd2 file2
 ```
+
+## Download
+```ssh
+git@github.com:vinicius-f-pereira/pipex.git
+```
+Use o comando `make` ou `make bonus` e para usar siga as instruções da [Primeira Parte](#pipex)
