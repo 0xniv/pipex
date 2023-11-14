@@ -1,4 +1,4 @@
-![eng](../../../stuff/blob/master/USA-icon.png) [![pt-BR](../../../stuff/blob/master/Brazil-icon.png)](README.pt-BR.md)
+![eng](../../../stuff/blob/main/USA-icon.png) [![pt-BR](../../../stuff/blob/main/Brazil-icon.png)](README.pt-BR.md)
 
 # `pipex`
 
