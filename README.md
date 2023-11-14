@@ -1,4 +1,5 @@
-![eng](../../../stuff/blob/master/eng.png)
+![eng](../../../stuff/blob/master/USA-icon.png) [![pt-BR](../../../stuff/blob/master/Brazil-icon.png)](README.pt-BR.md)
+
 # `pipex`
 
 The purpose of this project is the discovery in detail UNIX mechanism - `pipe`.
